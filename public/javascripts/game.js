@@ -75,13 +75,13 @@ function Game (player) {
             for (let j = 0; j < 8; j++) {
                 let color = this.field[i][j];
                 if (color !== 0) {
-                    this.setCell(j, i, color)
+                    this.setCell(j, i, color);
                 }
             }
         }
         let possibleMoves = this.getAvailableMoves();
         for (let i = 0; i < possibleMoves.length; i++){
-            this.setCell(possibleMoves[i][1], possibleMoves[i][0], 3)
+            this.setCell(possibleMoves[i][1], possibleMoves[i][0], 3);
         }
     };
 
