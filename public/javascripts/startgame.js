@@ -4,3 +4,4 @@ game.initTable();
 game.reset();
 
 
+game.display();

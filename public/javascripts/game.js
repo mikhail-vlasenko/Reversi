@@ -8,6 +8,10 @@ function Game (player) {
         for (let i = 0; i < this.field.length; i++) {
             this.field[i] = new Array(8).fill(0);
         }
+        this.field[3][3] = 1;
+        this.field[3][4] = 2;
+        this.field[4][3] = 2;
+        this.field[4][4] = 1;
         this.scoreBlue = 0;
         this.scoreRed = 0;
     };
@@ -34,7 +38,14 @@ function Game (player) {
     };
 
     this.display = function() {
-        // TODO: update the current field in html
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                let color = this.field[i][j];
+                if (color !== 0) {
+                    this.setCell(j, i, color)
+                }
+            }
+        }
     };
 
     this.getScore = function(){
@@ -62,11 +73,10 @@ function Game (player) {
 
     this.setCell = function (x, y, color) {
       let cell = this.getCell(x, y);
-      if (color === "red"){
-
+      if (color === 2){
         cell.children[0].className = "red piece";
       }
-      if (color === "blue"){
+      if (color === 1){
         cell.children[0].className = "blue piece";
       }
     };
