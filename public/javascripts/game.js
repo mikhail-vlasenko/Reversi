@@ -41,6 +41,21 @@ function Game (player) {
         // TODO: return score
     };
 
+    this.processClick = function(event){
+      //decide if the cell is active
+      console.log(event);
+      let coords = this.getCoords(event.id);
+      console.log(coords);
+    };
+
+    this.getCoords = function(str){
+      let num = parseInt(str.slice(4));
+      let x = Math.floor(num / 8);
+      let y = num % 8;
+
+      return {x:x,y:y};
+    };
+
     this.getCell = function (x, y) {
       return document.getElementById("cell"+(x*8+y));
     };
@@ -68,6 +83,7 @@ function Game (player) {
           td.id = "cell"+id;
           td.innerHTML = "<div>" + "</div>";
           id++;
+          td.addEventListener("click", () => this.processClick(td));
         }
       }
     };
