@@ -57,6 +57,7 @@ function Game (player) {
       console.log(event);
       let coords = this.getCoords(event.id);
       console.log(coords);
+      this.setCell(coords.x, coords.y, 3);
     };
 
     this.getCoords = function(str){
@@ -73,11 +74,17 @@ function Game (player) {
 
     this.setCell = function (x, y, color) {
       let cell = this.getCell(x, y);
+      if (color === 0){
+        cell.children[0].className = "";
+      }
       if (color === 2){
         cell.children[0].className = "red piece";
       }
       if (color === 1){
         cell.children[0].className = "blue piece";
+      }
+      if (color === 3){ //available
+        cell.children[0].className = "available piece";
       }
     };
 

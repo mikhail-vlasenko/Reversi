@@ -1,19 +1,35 @@
 table {
   border-collapse: collapse;
   border: 1px solid #ddd;
+  background-color: #121212;
+  box-sizing: border-box;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+tr,
+td {
+  box-sizing: border-box;
 }
 
 td {
   border: 1px solid #ddd;
   height: 64px;
   width: 64px;
+  padding: 3px;
 }
 
 .piece {
+  box-sizing: border-box;
   width: 64px;
   height: 64px;
   border-radius: 50%;
   display: inline-block;
+}
+
+.available {
+  border: 2px solid #59db7e;
+  box-shadow: 0px 0px 5px white, inset 0px 0px 5px white;
 }
 
 .red {
