@@ -33,8 +33,41 @@ function Game (player) {
         }
     };
 
-    this.availableMoves = function() {
-        // TODO: return an array with coordinates of moves that can be played now by this player
+    this.getAvailableMoves = function() {
+        let possibleMoves = [];
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                let fit = false;
+                for (let dy = -1; dy <= 1 && !fit; dy++) {
+                    for (let dx = -1; dx <= 1 && !fit; dx++) {
+                        if (dy === 0 && dx === 0) {
+                            break;
+                        }
+                        let hasEnemyPiece = false;
+                        let curI = i + dy;
+                        let curJ = j + dx;
+                        while (0 <= curI < 8 && 0 <= curJ < 8) {  // while disk === opponent's color
+                            if (this.field[curI][curJ] === 0) {
+                                break;
+                            }
+                            if (this.field[curI][curJ] === (3 - player)){
+                                hasEnemyPiece = true;
+                            }
+                            else if (hasEnemyPiece && this.field[curI][curJ] === player){
+                                fit = true;
+                                break;
+                            }
+                            i += dy;
+                            j += dx;
+                        }
+                    }
+                }
+                if (fit) {
+                    possibleMoves.push([i, j]);
+                }
+            }
+        }
+        return possibleMoves;
     };
 
     this.display = function() {
@@ -45,6 +78,10 @@ function Game (player) {
                     this.setCell(j, i, color)
                 }
             }
+        }
+        let possibleMoves = this.getAvailableMoves();
+        for (let i = 0; i < possibleMoves.length; i++){
+            this.setCell(possibleMoves[i][1], possibleMoves[i][0], 3)
         }
     };
 
