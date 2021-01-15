@@ -41,5 +41,35 @@ function Game (player) {
         // TODO: return score
     };
 
+    this.getCell = function (x, y) {
+      return document.getElementById("cell"+(x*8+y));
+    };
+
+    this.setCell = function (x, y, color) {
+      let cell = this.getCell(x, y);
+      if (color === "red"){
+        cell.children[0].className = "red";
+      }
+      if (color === "blue"){
+        cell.children[0].className = "red";
+      }
+    };
+
+    this.initTable = function (){
+      let i = 0;
+      let id = 0;
+      for (let row of document.querySelector("table").children[0].children) {
+        row.className = "row";
+        row.id = i;
+        i++;
+        for (let td of row.children) {
+          td.className = "cell";
+          td.id = "cell"+id;
+          td.innerHTML = "<div>" + "</div>";
+          id++;
+        }
+      }
+    };
+
 }
 
