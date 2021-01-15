@@ -14,15 +14,19 @@ td {
 
 td {
   border: 1px solid #ddd;
-  height: 64px;
-  width: 64px;
+  /* height: 64px;
+  width: 64px; */
   padding: 3px;
 }
 
-.piece {
+td div {
   box-sizing: border-box;
   width: 64px;
   height: 64px;
+  overflow: hidden;
+}
+
+.piece {
   border-radius: 50%;
   display: inline-block;
 }
