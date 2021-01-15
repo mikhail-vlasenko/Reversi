@@ -24,5 +24,9 @@ function Game () {
         // TODO: return score
     };
 
+    this.setCell = function (x, y, color) {
+      
+    };
+
 }
 
