@@ -86,7 +86,19 @@ function Game (player) {
     };
 
     this.getScore = function(){
-        // TODO: return score
+        let blue = 0;
+        let red = 0;
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                if (this.field[i][j] === 1){
+                    blue++;
+                }
+                else if (this.field[i][j]){
+                    red++;
+                }
+            }
+        }
+        return [blue, red];
     };
 
     this.processClick = function(event){
