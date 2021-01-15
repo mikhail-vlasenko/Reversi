@@ -48,10 +48,11 @@ function Game (player) {
     this.setCell = function (x, y, color) {
       let cell = this.getCell(x, y);
       if (color === "red"){
-        cell.children[0].className = "red";
+
+        cell.children[0].className = "red piece";
       }
       if (color === "blue"){
-        cell.children[0].className = "red";
+        cell.children[0].className = "blue piece";
       }
     };
 
