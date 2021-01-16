@@ -57,12 +57,16 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+var gameStatistics = require("./statisticsTracker");
+
 
 //--------------------vvvvv   WEBSOCKET    vvvv---------------------
 
 const wss = new websocket.Server({ server });
 
 var websockets = {}; //property: websocket, value: game
+
+
 
 /*
  * regularly clean up the websockets object
