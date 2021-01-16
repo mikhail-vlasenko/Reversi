@@ -20,17 +20,17 @@ function Game(player) {
 
     // Makes a move for a given player, changes the field accordingly
     this.makeMove = function (player, x, y) {
-        for (let dy = -1; dy <= 1; dy++) {
-            for (let dx = -1; dx <= 1; dx++) {
-                if (dy === 0 && dx === 0) {
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                if (dx === 0 && dy === 0) {
                     continue;
                 }
-                let i = y + dy;
-                let j = x + dx;
+                let i = x + dx;
+                let j = y + dy;
                 while (this.field[i][j] === (3 - player)) {  // while disk === opponent's color
-                    this.field[i][j] = player;
-                    i += dy;
-                    j += dx;
+                    this.setCell(i, j, player);
+                    i += dx;
+                    j += dy;
                 }
             }
         }
@@ -89,6 +89,13 @@ function Game(player) {
     // Shows all possible moves to the player
     this.drawPossibleMoves = function () {
         let possibleMoves = this.getAvailableMoves();
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                if (this.getCell(i, j).children[0].className === "available piece") {
+                    this.setCell(i, j, 0);
+                }
+            }
+        }
         for (let i = 0; i < possibleMoves.length; i++) {
             this.setCell(possibleMoves[i][1], possibleMoves[i][0], 3);
         }
@@ -136,8 +143,9 @@ function Game(player) {
         for (let i = 0; i < possibleMoves.length; i++) {
             if (coords.x === possibleMoves[i][1] && coords.y === possibleMoves[i][0]) {
                 console.log('valid action');
-                // TODO: Make a move that is saved in field
                 this.setCell(coords.x, coords.y, this.player);
+                this.makeMove(player, coords.x, coords.y);
+                this.drawPossibleMoves();
                 return;
             }
         }
@@ -181,8 +189,8 @@ function Game(player) {
     // Changes the value of the playername
     this.setPlayer = function (player) {
         let playername = document.getElementById("playerName");
-        playername.innerHTML = player == 1 ? "Blueberry" : "Radish";
-        playername.className = player == 1 ? "blueText" : "redText";
+        playername.innerHTML = player === 1 ? "Blueberry" : "Radish";
+        playername.className = player === 1 ? "blueText" : "redText";
     };
 
     // Starts the time passed stopwatch
