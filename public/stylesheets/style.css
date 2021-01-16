@@ -1,3 +1,13 @@
+/* Variables: */
+:root {
+  --blue: #6800e0;
+  --red: #d3168c;
+  --activated: #59db7e;
+  --background-color: #121212;
+  --text-color: #eee;
+  --font: Helvetica;
+}
+
 /* CSS RESET: */
 html,
 body,
@@ -126,7 +136,8 @@ table {
 /* ---------------------------------------------------- */
 
 html {
-  font-family: sans-serif;
-  background-color: #121212;
-  color: #eee;
+  font-family: sans-serif; /* fallback in case font not found */
+  font-family: var(--font);
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
