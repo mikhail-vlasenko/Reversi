@@ -14,9 +14,8 @@ td {
 
 td {
   border: 1px solid #ddd;
-  /* height: 64px;
-  width: 64px; */
   padding: 3px;
+  line-height: 0px;
 }
 
 td div {
