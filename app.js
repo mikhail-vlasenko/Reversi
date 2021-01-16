@@ -7,6 +7,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
+var websocket = require("ws");
 
 var indexRouter = require('./routes/index');
 
@@ -22,11 +23,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-
-
-//--------------------vvvvv   WEBSOCKET    vvvv---------------------
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -60,6 +56,28 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+
+//--------------------vvvvv   WEBSOCKET    vvvv---------------------
+
+const wss = new websocket.Server({ server });
+
+var websockets = {}; //property: websocket, value: game
+
+/*
+ * regularly clean up the websockets object
+ */
+setInterval(function() {
+  for (let i in websockets) {
+    if (Object.prototype.hasOwnProperty.call(websockets,i)) {
+      let gameObj = websockets[i];
+      //if the gameObj has a final status, the game is complete/aborted
+      if (gameObj.finalStatus != null) {
+        delete websockets[i];
+      }
+    }
+  }
+}, 50000);
 
 /**
  * Listen on provided port, on all network interfaces.
