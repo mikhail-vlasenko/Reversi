@@ -20,7 +20,7 @@ function Game(player) {
         for (let dy = -1; dy <= 1; dy++) {
             for (let dx = -1; dx <= 1; dx++) {
                 if (dy === 0 && dx === 0) {
-                    break;
+                    continue;
                 }
                 let i = y + dy;
                 let j = x + dx;
@@ -42,7 +42,7 @@ function Game(player) {
                 for (let dy = -1; dy <= 1 && !fit; dy++) {
                     for (let dx = -1; dx <= 1 && !fit; dx++) {
                         if (dy === 0 && dx === 0) {
-                            break;
+                            continue;
                         }
                         let hasEnemyPiece = false;
                         let curI = i + dy;
@@ -78,11 +78,15 @@ function Game(player) {
                 }
             }
         }
+        this.drawPossibleMoves();
+    };
+
+    this.drawPossibleMoves = function () {
         let possibleMoves = this.getAvailableMoves();
         for (let i = 0; i < possibleMoves.length; i++) {
             this.setCell(possibleMoves[i][1], possibleMoves[i][0], 3);
         }
-    };
+    }
 
     this.getScore = function () {
         let blue = 0;
@@ -133,12 +137,15 @@ function Game(player) {
         let cell = this.getCell(x, y);
         if (color === 0) {
             cell.children[0].className = "";
+            this.field[y][x] = 0;
         }
         if (color === 2) {
             cell.children[0].className = "red piece";
+            this.field[y][x] = 2;
         }
         if (color === 1) {
             cell.children[0].className = "blue piece";
+            this.field[y][x] = 1;
         }
         if (color === 3) { //available
             cell.children[0].className = "available piece";
