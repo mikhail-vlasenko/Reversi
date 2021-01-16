@@ -163,7 +163,7 @@ function Game(player) {
         if (this.possibleMoves.length === 0) {
             this.gameOngoing = false;
         }
-    }
+    };
 
     //Gets coords from strings like "cell23" (which are ids of the cells in the table)
     this.getCoords = function (str) {
@@ -208,15 +208,15 @@ function Game(player) {
 
     // Starts the time passed stopwatch
     this.startTime = function (){
-        var timer = setInterval(() => {
+        let timer = setInterval(() => {
             let endTime = new Date();
             let timeDiff = endTime - this.startingTime;
             let seconds = Math.floor((timeDiff / 1000) % 60),
             minutes = Math.floor((timeDiff / (1000 * 60)));
             document.getElementById("time").innerHTML = minutes + ":" + (seconds < 10 ? "0"+seconds : seconds);
-            // if (GAME_OVER){ 
-            //     clearInterval(timer)
-            // }
+            if (!this.gameOngoing){ 
+                clearInterval(timer);
+            }
         }, 1000);
 
     };
