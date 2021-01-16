@@ -9,8 +9,8 @@
   </head>
   <body>
     <main>
-      <h2>Turn: <span id="turn">Blue</span></h2>
-      <!-- Below is the table where the actual game takes place. (Right now it's empty since there are no pieces in the game yet). We will be using js to fill in the table with pieces and assign ids to each row & cell to make them easily accessible.  -->
+      <h2>Turn: <span id="turn"></span></h2>
+      <!-- Below is the table where the actual game takes place. (Right now it's empty since there are no pieces in the game yet). We are using js to fill in the table with pieces and assign ids to each row & cell to make them easily accessible.  -->
       <table>
         <tr>
           <td></td>
@@ -96,13 +96,14 @@
     </main>
     <aside>
       <div id="stats">
-        <p>Time passed: <span id="time">24:42</span></p>
+        <p>Time passed: <span id="time"></span></p>
         <div id="score">
-          Score: <br />
-          Blueberry: <span id="Score1">0</span> <br />
-          Radish: <span id="Score2">0</span>
+          <h3>Score:</h3>
+          <span class="blueText">Blueberry:</span> <span id="Score1">0</span>
+          <br />
+          <span class="redText">Radish:</span> <span id="Score2">0</span>
         </div>
-        <p>You are: Blue</p>
+        <p class="activated">You are: <span id="playerName"></span></p>
       </div>
     </aside>
   </body>

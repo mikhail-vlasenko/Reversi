@@ -40,6 +40,18 @@ td div {
   background-color: var(--red);
 }
 
+.redText {
+  color: var(--red);
+}
+
 .blue {
   background-color: var(--blue);
+}
+
+.blueText {
+  color: var(--blue);
+}
+
+.activated {
+  color: var(--activated);
 }

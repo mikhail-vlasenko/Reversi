@@ -109,6 +109,18 @@ function Game(player) {
         return {blue:blue, red:red};
     };
 
+    this.setTurn = function (player) {
+        let turnSign = document.getElementById("turn");
+        turnSign.innerHTML = player == 1 ? "Blueberry" : "Radish";
+        turnSign.className = player == 1 ? "blueText" : "redText";
+    }
+
+    // Sets the score in the game screen to provided values
+    this.setScore = function (player1Blue, player2Red) {
+        document.getElementById("Score1").innerHTML = player1Blue;
+        document.getElementById("Score2").innerHTML = player2Red;
+    };
+
     // Processes a user's click on any of the cells on the board \
     // (checks if they are available for a move and makes the move)
     this.processClick = function (event) {
@@ -162,6 +174,13 @@ function Game(player) {
         if (color === 3) { //available
             cell.children[0].className = "available piece";
         }
+    };
+
+    // Changes the value of the 
+    this.setPlayer = function (player) {
+        let playername = document.getElementById("playerName");
+        playername.innerHTML = player == 1 ? "Blueberry" : "Radish";
+        playername.className = player == 1 ? "blueText" : "redText";
     };
 
     // Sets IDs for all rows and cells in the game table
