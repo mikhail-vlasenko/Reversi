@@ -6,6 +6,7 @@ function Game(player) {
     this.myTurn = this.player === 1;  // is set to true when we get the opponent's turn from the server
     this.possibleMoves = this.getAvailableMoves();  // is empty if it's not my turn
     this.gameOngoing = true;
+    this.startingTime = new Date();
 
     // Resets the 2D field array back to its original state (or initialises it)
     this.reset = function () {
@@ -120,11 +121,12 @@ function Game(player) {
         return {blue:blue, red:red};
     };
 
-    this.setTurn = function (player) {
+    // Changes the text in the turn indicator
+    this.setTurnText = function (player) {
         let turnSign = document.getElementById("turn");
         turnSign.innerHTML = player === 1 ? "Blueberry" : "Radish";
         turnSign.className = player === 1 ? "blueText" : "redText";
-    }
+    };
 
     // Sets the score in the game screen to provided values
     this.setScore = function (player1Blue, player2Red) {
@@ -197,11 +199,26 @@ function Game(player) {
         }
     };
 
-    // Changes the value of the 
+    // Changes the value of the playername
     this.setPlayer = function (player) {
         let playername = document.getElementById("playerName");
         playername.innerHTML = player === 1 ? "Blueberry" : "Radish";
         playername.className = player === 1 ? "blueText" : "redText";
+    };
+
+    // Starts the time passed stopwatch
+    this.startTime = function (){
+        var timer = setInterval(() => {
+            let endTime = new Date();
+            let timeDiff = endTime - this.startingTime;
+            let seconds = Math.floor((timeDiff / 1000) % 60),
+            minutes = Math.floor((timeDiff / (1000 * 60)));
+            document.getElementById("time").innerHTML = minutes + ":" + (seconds < 10 ? "0"+seconds : seconds);
+            // if (GAME_OVER){ 
+            //     clearInterval(timer)
+            // }
+        }, 1000);
+
     };
 
     // Sets IDs for all rows and cells in the game table
