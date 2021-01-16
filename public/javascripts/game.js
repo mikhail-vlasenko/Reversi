@@ -3,6 +3,7 @@ function Game(player) {
     this.player = player; // who is playing on this side (1 - blue player, 2 - red player)
     this.scoreBlue = null;
     this.scoreRed = null;
+    this.myTurn = this.player === 1;  // is set to true when we get the opponent's turn from the server
 
     // Resets the 2D field array back to its original state (or initialises it)
     this.reset = function () {
@@ -38,6 +39,7 @@ function Game(player) {
     // Returns all available moves for the current player
     this.getAvailableMoves = function () {
         let possibleMoves = [];
+        if (!this.myTurn) return possibleMoves;
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
                 let fit = false;
@@ -136,13 +138,14 @@ function Game(player) {
         let coords = this.getCoords(event.id);
         console.log(coords);
 
-        let possibleMoves = this.getAvailableMoves();
+        let possibleMoves = this.getAvailableMoves();  // is empty if it's not my turn
         console.log(possibleMoves);
         for (let i = 0; i < possibleMoves.length; i++) {
             if (coords.x === possibleMoves[i][1] && coords.y === possibleMoves[i][0]) {
                 console.log('valid action');
                 this.setCell(coords.x, coords.y, this.player);
                 this.makeMove(player, coords.x, coords.y);
+                this.myTurn = false;
                 this.drawPossibleMoves();
                 return;
             }
