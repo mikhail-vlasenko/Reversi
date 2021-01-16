@@ -4,6 +4,7 @@ function Game(player) {
     this.scoreBlue = null;
     this.scoreRed = null;
 
+    // Resets the 2D field array back to its original state (or initialises it)
     this.reset = function () {
         for (let i = 0; i < this.field.length; i++) {
             this.field[i] = new Array(8).fill(0);
@@ -16,6 +17,7 @@ function Game(player) {
         this.scoreRed = 0;
     };
 
+    // Makes a move for a given player, changes the field accordingly
     this.makeMove = function (player, x, y) {
         for (let dy = -1; dy <= 1; dy++) {
             for (let dx = -1; dx <= 1; dx++) {
@@ -33,6 +35,7 @@ function Game(player) {
         }
     };
 
+    // Returns all available moves for the current player
     this.getAvailableMoves = function () {
         let possibleMoves = [];
         for (let i = 0; i < 8; i++) {
@@ -69,6 +72,7 @@ function Game(player) {
         return possibleMoves;
     };
 
+    // Takes values of cells from the 2D array field[][] and transfers them onto the board
     this.display = function () {
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
@@ -81,13 +85,15 @@ function Game(player) {
         this.drawPossibleMoves();
     };
 
+    // Shows all possible moves to the player
     this.drawPossibleMoves = function () {
         let possibleMoves = this.getAvailableMoves();
         for (let i = 0; i < possibleMoves.length; i++) {
             this.setCell(possibleMoves[i][1], possibleMoves[i][0], 3);
         }
-    }
+    };
 
+    // Returns an object {blu, red} with the scores for each player
     this.getScore = function () {
         let blue = 0;
         let red = 0;
@@ -100,9 +106,11 @@ function Game(player) {
                 }
             }
         }
-        return [blue, red];
+        return {blue:blue, red:red};
     };
 
+    // Processes a user's click on any of the cells on the board \
+    // (checks if they are available for a move and makes the move)
     this.processClick = function (event) {
         //decide if the cell is active
         console.log(event);
@@ -114,6 +122,7 @@ function Game(player) {
         for (let i = 0; i < possibleMoves.length; i++) {
             if (coords.x === possibleMoves[i][1] && coords.y === possibleMoves[i][0]) {
                 console.log('valid action');
+                // TODO: Make a move that is saved in field
                 this.setCell(coords.x, coords.y, this.player);
                 return;
             }
@@ -121,6 +130,7 @@ function Game(player) {
         console.log('invalid action');
     };
 
+    //Gets coords from strings like "cell23" (which are ids of the cells in the table)
     this.getCoords = function (str) {
         let num = parseInt(str.slice(4));
         let x = Math.floor(num / 8);
@@ -129,10 +139,12 @@ function Game(player) {
         return {x: x, y: y};
     };
 
+    // Returns a cell from given coordinates (from the document)
     this.getCell = function (x, y) {
         return document.getElementById("cell" + (x * 8 + y));
     };
 
+    // Sets a cell with coordinates x,y to be a color 0-3 
     this.setCell = function (x, y, color) {
         let cell = this.getCell(x, y);
         if (color === 0) {
@@ -152,6 +164,7 @@ function Game(player) {
         }
     };
 
+    // Sets IDs for all rows and cells in the game table
     this.initTable = function () {
         let i = 0;
         let id = 0;
