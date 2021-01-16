@@ -8,8 +8,7 @@ game.setScore(0,0);
 game.setTurnText(1);
 game.startTime();
 
-
 game.reset();
-
+game.possibleMoves = game.getAvailableMoves();
 
 game.display();

@@ -4,7 +4,7 @@ function Game(player) {
     this.scoreBlue = null;
     this.scoreRed = null;
     this.myTurn = this.player === 1;  // is set to true when we get the opponent's turn from the server
-    this.possibleMoves = this.getAvailableMoves();  // is empty if it's not my turn
+    this.possibleMoves = [];
     this.gameOngoing = true;
     this.startingTime = new Date();
 
