@@ -4,6 +4,8 @@ function Game(player) {
     this.scoreBlue = null;
     this.scoreRed = null;
     this.myTurn = this.player === 1;  // is set to true when we get the opponent's turn from the server
+    this.possibleMoves = this.getAvailableMoves();  // is empty if it's not my turn
+    this.gameOngoing = true;
 
     // Resets the 2D field array back to its original state (or initialises it)
     this.reset = function () {
@@ -138,10 +140,8 @@ function Game(player) {
         let coords = this.getCoords(event.id);
         console.log(coords);
 
-        let possibleMoves = this.getAvailableMoves();  // is empty if it's not my turn
-        console.log(possibleMoves);
-        for (let i = 0; i < possibleMoves.length; i++) {
-            if (coords.x === possibleMoves[i][1] && coords.y === possibleMoves[i][0]) {
+        for (let i = 0; i < this.possibleMoves.length; i++) {
+            if (coords.x === this.possibleMoves[i][1] && coords.y === this.possibleMoves[i][0]) {
                 console.log('valid action');
                 this.setCell(coords.x, coords.y, this.player);
                 this.makeMove(player, coords.x, coords.y);
@@ -152,6 +152,16 @@ function Game(player) {
         }
         console.log('invalid action');
     };
+
+    // is called when the opponent's turn is received, updates the local state accordingly
+    this.receiveTurn = function (x, y) {
+        this.makeMove((3 - this.player), x, y);
+        this.myTurn = true;
+        this.possibleMoves = this.getAvailableMoves();  // is empty if it's not my turn
+        if (this.possibleMoves.length === 0) {
+            this.gameOngoing = false;
+        }
+    }
 
     //Gets coords from strings like "cell23" (which are ids of the cells in the table)
     this.getCoords = function (str) {
