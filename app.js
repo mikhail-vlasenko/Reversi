@@ -27,6 +27,12 @@ app.get('/favicon.ico', (req, res) => res.status(204).send());
 // Every route thing below logger will be logged, so favicon and /public/* won't be logged
 app.use(logger('dev'));
 app.use('/', indexRouter);
+var gameStatistics = require("./statisticsTracker");
+
+/* GET home page. */
+app.get('/', function(req, res) {
+    res.render('splash', { totalGames: gameStatistics.gamesPlayed, peopleIngame: gameStatistics.peopleInGame, blueWins: gameStatistics.blueWins, redWins: gameStatistics.redWins });
+  });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -61,7 +67,6 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
-var gameStatistics = require("./statisticsTracker");
 var messages = require("./public/javascripts/messages");
 
 //--------------------vvvvv   WEBSOCKET    vvvv---------------------
