@@ -2,18 +2,25 @@
 let game = new Game(1);
 
 
-game.initTable();
+
 
 // Below 3 could be put into another function
-game.setPlayer(1);
-game.setScore(0,0);
-game.setTurnText(1);
-game.startTime();
+function startTheGame(player) {
+    // player 1 (blu) always has the first move
+    game.initTable();
+    game.setScore(0,0);
+    game.setTurnText(player);
+    game.startTime();
+    game.setPlayer(player);
 
-game.reset();
-game.possibleMoves = game.getAvailableMoves();
+    game.reset();
+    game.possibleMoves = game.getAvailableMoves();
 
-game.display();
+    game.display();
+}
+
+
+
 
 
 
@@ -30,14 +37,15 @@ socket.onmessage = function (msg) {
     switch(message) {
         case messages.player1:
             console.log("I am player 1");
+            startTheGame(1);
             break;
         case messages.player2:
+            console.log("I am player 2");
+            startTheGame(2);
             break;
         case messages.lost1:
             break;
         case messages.lost2:
-            break;
-        case messages.startGame:
             break;
         default:
             //coordinates
