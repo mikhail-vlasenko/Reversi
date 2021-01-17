@@ -24,6 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -58,15 +60,30 @@ app.set('port', port);
 var server = http.createServer(app);
 
 var gameStatistics = require("./statisticsTracker");
-
+var messages = require("./public/javascripts/messages");
 
 //--------------------vvvvv   WEBSOCKET    vvvv---------------------
 
 const wss = new websocket.Server({ server });
 
 var websockets = {}; //property: websocket, value: game
+var connectionID = 0;
 
 
+wss.on('connection', function connection(ws) {
+    let con = ws;
+    con.id = connectionID++;
+    websockets[con.id] = con;
+
+    gameStatistics.gamesInitialized++;
+    
+    con.send(messages.player1);
+
+    con.on('message', function incoming(message) {
+        console.log('Message received: %s \n from: %s', message, con.id);
+        //can now use: websockets[con.id]
+    });
+});
 
 /*
  * regularly clean up the websockets object
