@@ -28,6 +28,44 @@ td div {
 .piece {
   border-radius: 50%;
   display: inline-block;
+  position: relative;
+}
+
+/* .piece::before {
+  content: "";
+  background: url(../assets/animations/blueToRedSq.gif);
+  display: none;
+  position: relative;
+  height: 64px;
+  width: 64px;
+  background-size: 64px 64px;
+  visibility: hidden;
+} */
+
+.animateToRed {
+  background: url(../assets/animations/blueToRedSq.gif);
+  background-size: 64px 64px;
+  display: block;
+  visibility: visible;
+}
+
+/* .piece::after {
+  content: "";
+  background: url(../assets/animations/redToBlueSq.gif);
+  display: none;
+  position: relative;
+  top: -100%;
+  height: 64px;
+  width: 64px;
+  background-size: 64px 64px;
+  visibility: hidden;
+} */
+
+.animateToBlue {
+  background: url(../assets/animations/redtoBlue1loop.gif);
+  background-size: 64px 64px;
+  display: block;
+  visibility: visible;
 }
 
 .available {
@@ -37,6 +75,7 @@ td div {
 }
 
 .red {
+  background-image: none;
   background-color: var(--red);
 }
 
@@ -45,7 +84,8 @@ td div {
 }
 
 .blue {
-  background-color: var(--blue);
+  background-image: url("");
+  background-color: #6e2ab9;
 }
 
 .blueText {

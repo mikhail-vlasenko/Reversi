@@ -179,6 +179,35 @@ function Game(player) {
         return document.getElementById("cell" + (x * 8 + y));
     };
 
+    // Animates a cell to rotate to a given color from an opposite color
+    this.animateCellTo = function (x, y, color) {
+        let cell = this.getCell(x, y).children[0];
+        if (color === "red" || color===2){
+            cell.classList.remove("blue");
+            cell.classList.add("animateToRed");
+            let randomId = new Date().getTime();
+            let data = "../assets/animations/bluetoRed1loop.gif";
+            cell.style.backgroundImage = "url(" + data + "?random=" + randomId + ")";
+            setTimeout(() => {
+                cell.classList.add("red");
+                cell.classList.remove("animateToRed");
+                cell.style = null;
+            }, 900);
+        }
+        else if (color === "blue" || color===1){
+            cell.classList.remove("red");
+            cell.classList.add("animateToBlue");
+            let randomId = new Date().getTime();
+            let data = "../assets/animations/redtoBlue1loop.gif";
+            cell.style.backgroundImage = "url(" + data + "?random=" + randomId + ")";
+            setTimeout(() => {
+                cell.classList.add("blue");
+                cell.classList.remove("animateToBlue");
+                cell.style = null;
+            }, 900);
+        }
+    }
+
     // Sets a cell with coordinates x,y to be a color 0-3 
     this.setCell = function (x, y, color) {
         let cell = this.getCell(x, y);
@@ -187,11 +216,25 @@ function Game(player) {
             this.field[y][x] = 0;
         }
         if (color === 2) {
-            cell.children[0].className = "red piece";
+            //check if animation:
+            if (cell.children[0].classList.contains("blue")){
+                console.log("animation");
+                this.animateCellTo(x,y, "red");
+            }
+            else{
+                cell.children[0].className = "red piece";
+            }
             this.field[y][x] = 2;
         }
         if (color === 1) {
-            cell.children[0].className = "blue piece";
+            //check if animation:
+            if (cell.children[0].classList.contains("red")){
+                console.log("animation");
+                this.animateCellTo(x,y, "blue");
+            }
+            else{
+                cell.children[0].className = "blue piece";
+            }
             this.field[y][x] = 1;
         }
         if (color === 3) { //available
