@@ -7,6 +7,7 @@ function Game(player) {
     this.possibleMoves = [];
     this.gameOngoing = true;
     this.startingTime = new Date();
+    this.animationsOn = true;
 
     // Resets the 2D field array back to its original state (or initialises it)
     this.reset = function () {
@@ -206,7 +207,7 @@ function Game(player) {
                 cell.style = null;
             }, 900);
         }
-    }
+    };
 
     // Sets a cell with coordinates x,y to be a color 0-3 
     this.setCell = function (x, y, color) {
@@ -217,7 +218,7 @@ function Game(player) {
         }
         if (color === 2) {
             //check if animation:
-            if (cell.children[0].classList.contains("blue")){
+            if (cell.children[0].classList.contains("blue") && this.animationsOn){
                 console.log("animation");
                 this.animateCellTo(x,y, "red");
             }
@@ -228,7 +229,7 @@ function Game(player) {
         }
         if (color === 1) {
             //check if animation:
-            if (cell.children[0].classList.contains("red")){
+            if (cell.children[0].classList.contains("red") && this.animationsOn){
                 console.log("animation");
                 this.animateCellTo(x,y, "blue");
             }
