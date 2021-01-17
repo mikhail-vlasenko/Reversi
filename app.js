@@ -73,6 +73,7 @@ var connectionID = 0;
 var waitingPlayer = -1;
 var Match = require('./match.js');
 var matches = {};
+var matchCnt = 0;
 
 wss.on('connection', function connection(ws) {
     let con = ws;
@@ -84,13 +85,12 @@ wss.on('connection', function connection(ws) {
     }else {
         let match = new Match(waitingPlayer, con);
         waitingPlayer.partner = con.id;
-        waitingPlayer.match = gameStatistics.gamesInitialized;
+        waitingPlayer.match = matchCnt;
         con.partner = waitingPlayer.id;
-        con.match = gameStatistics.gamesInitialized;
-        matches[gameStatistics.gamesInitialized++] = match;
-        console.log('match made with ids');
-        console.log(waitingPlayer.id);
-        console.log(con.id);
+        con.match = matchCnt;
+        matches[matchCnt++] = match;
+        gameStatistics.peopleInGame += 2;
+
         waitingPlayer.send(messages.player1);
         con.send(messages.player2);
         waitingPlayer = -1;
@@ -100,12 +100,24 @@ wss.on('connection', function connection(ws) {
         console.log('Message received: %s \nfrom: %s', message, con.id);
         if (!isNaN(message)){  // is just a number -> is a turn
             websockets[con.partner].send(message);
+        } else if (message === 'Lost1') {
+            matches[con.match].result = 2;
+            gameStatistics.gamesPlayed++;
+            gameStatistics.redWins++;
+        } else if (message === 'Lost2') {
+            matches[con.match].result = 1;
+            gameStatistics.gamesPlayed++;
+            gameStatistics.blueWins++;
+        } else {
+            console.log('unknown message');
         }
     });
 
     con.on('close', function closing(message) {
         if (con.id === waitingPlayer.id){
             waitingPlayer = -1;
+        }else {
+            gameStatistics.peopleInGame--;
         }
         console.log('Closed: %s', message);
     });
