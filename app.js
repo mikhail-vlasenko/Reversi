@@ -70,20 +70,44 @@ const wss = new websocket.Server({ server });
 
 var websockets = {}; //property: websocket, value: game
 var connectionID = 0;
-
+var waitingPlayer = -1;
+var Match = require('./match.js');
+var matches = {};
 
 wss.on('connection', function connection(ws) {
     let con = ws;
     con.id = connectionID++;
     websockets[con.id] = con;
 
-    gameStatistics.gamesInitialized++;
-    
-    con.send(messages.player1);
+    if (waitingPlayer === -1) {
+        waitingPlayer = con;
+    }else {
+        let match = new Match(waitingPlayer, con);
+        waitingPlayer.partner = con.id;
+        waitingPlayer.match = gameStatistics.gamesInitialized;
+        con.partner = waitingPlayer.id;
+        con.match = gameStatistics.gamesInitialized;
+        matches[gameStatistics.gamesInitialized++] = match;
+        console.log('match made with ids');
+        console.log(waitingPlayer.id);
+        console.log(con.id);
+        waitingPlayer.send(messages.player1);
+        con.send(messages.player2);
+    }
 
-    con.on('message', function incoming(message) {
+    con.on('message', function incoming(msg) {
+        let message = msg.data;
         console.log('Message received: %s \n from: %s', message, con.id);
-        //can now use: websockets[con.id]
+        if (!isNaN(message)){  // is just a number -> is a turn
+            websocket[con.partner].send(message);
+        }
+    });
+
+    con.on('close', function closing(message) {
+        if (con.id === waitingPlayer.id){
+            waitingPlayer = -1;
+        }
+        console.log('Closed: %s', message);
     });
 });
 
