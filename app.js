@@ -95,11 +95,10 @@ wss.on('connection', function connection(ws) {
         con.send(messages.player2);
     }
 
-    con.on('message', function incoming(msg) {
-        let message = msg.data;
-        console.log('Message received: %s \n from: %s', message, con.id);
+    con.on('message', function incoming(message) {
+        console.log('Message received: %s \nfrom: %s', message, con.id);
         if (!isNaN(message)){  // is just a number -> is a turn
-            websocket[con.partner].send(message);
+            websockets[con.partner].send(message);
         }
     });
 
