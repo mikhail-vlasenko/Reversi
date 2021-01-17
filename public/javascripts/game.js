@@ -93,7 +93,7 @@ function Game(player) {
 
     // Shows all possible moves to the player
     this.drawPossibleMoves = function () {
-        let possibleMoves = this.getAvailableMoves();
+        this.possibleMoves = this.getAvailableMoves();
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
                 if (this.getCell(i, j).children[0].className === "available piece") {
@@ -101,8 +101,8 @@ function Game(player) {
                 }
             }
         }
-        for (let i = 0; i < possibleMoves.length; i++) {
-            this.setCell(possibleMoves[i][1], possibleMoves[i][0], 3);
+        for (let i = 0; i < this.possibleMoves.length; i++) {
+            this.setCell(this.possibleMoves[i][1], this.possibleMoves[i][0], 3);
         }
     };
 
@@ -139,30 +139,34 @@ function Game(player) {
     // (checks if they are available for a move and makes the move)
     this.processClick = function (event) {
         //decide if the cell is active
-        console.log(event);
         let coords = this.getCoords(event.id);
         console.log(coords);
-
         for (let i = 0; i < this.possibleMoves.length; i++) {
             if (coords.x === this.possibleMoves[i][1] && coords.y === this.possibleMoves[i][0]) {
-                console.log('valid action');
+                console.log('Move made');
                 this.setCell(coords.x, coords.y, this.player);
                 this.makeMove(player, coords.x, coords.y);
                 this.myTurn = false;
                 this.drawPossibleMoves();
+                socket.send(coords.x.toString() + coords.y.toString());
                 return;
             }
         }
-        console.log('invalid action');
+        
     };
 
     // is called when the opponent's turn is received, updates the local state accordingly
-    this.receiveTurn = function (x, y) {
+    this.receiveTurn = function (message) {
+        let x = parseInt(message.charAt(0));
+        let y = parseInt(message.charAt(1));
+        this.setCell(x, y, 3-player);
         this.makeMove((3 - this.player), x, y);
         this.myTurn = true;
-        this.possibleMoves = this.getAvailableMoves();  // is empty if it's not my turn
+        this.drawPossibleMoves();
+        //No moves (lost):
         if (this.possibleMoves.length === 0) {
             this.gameOngoing = false;
+            socket.send("Lost"+this.player);
         }
     };
 
@@ -281,6 +285,12 @@ function Game(player) {
                 td.addEventListener("click", () => this.processClick(td));
             }
         }
+    };
+
+    // Ends the game taking the player who won as an argument
+    this.endGame = function (player){
+        this.gameOngoing = false;
+        document.getElementById("gametitle").innerHTML = (player === this.player ? "You won the game!" : "You lost :(");
     };
 
 }
