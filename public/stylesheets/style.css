@@ -8,6 +8,14 @@
   --font: Helvetica;
 }
 
+.redText {
+  color: var(--red);
+}
+
+.blueText {
+  color: var(--blue);
+}
+
 /* CSS RESET: */
 html,
 body,

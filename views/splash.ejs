@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Reversi</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
-<body style="background-color:#121212;color: #fff">
-<main >
-    <h1 >Reversi</h1>
-    <button id="play"><a href="/play">Play</a></button>
-    <img width="50%" src="/assets/animations/fullRotation.gif">
-</main>
-<aside>
-    <h3>Random Statistics:</h3>
-    <p>Total games played: <div id="totalGames"></div></p>
-    <p>People in-game: <div id="peopleIngame"></div></p>
-    <p>Color win rate: <span id="blueWinPercent"></span>% Blue, <span id="redWinPercent"></span>% Red</p>
-</aside>
-</body>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/splash.css" />
+  </head>
+  <body style="background-color: #121212; color: #fff">
+    <main>
+      <h1>ЯEVERSI</h1>
+      <a id="play" href="/play">Play</a>
+      <img width="50%" src="/assets/animations/fullRotation.gif" />
+    </main>
+    <aside>
+      <h3>Random Statistics</h3>
+      <p><span>Total games played:</span> <span id="totalGames">0</span></p>
+      <p><span>People in-game: </span> <span id="peopleIngame">0</span></p>
+      <p><span>Color win rate: </span></p>
+      <p class="blueText">
+        <span>Blueberry:</span><span id="blueWinPercent"></span>%
+      </p>
+      <p class="redText">
+        <span>Radish</span><span id="redWinPercent">%</span>
+      </p>
+    </aside>
+  </body>
 </html>

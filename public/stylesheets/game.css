@@ -1,7 +1,6 @@
 table {
   border-collapse: collapse;
   border: 1px solid #ddd;
-  background-color: #121212;
   box-sizing: border-box;
   border-collapse: collapse;
   border-spacing: 0;
@@ -79,17 +78,9 @@ td div {
   background-color: var(--red);
 }
 
-.redText {
-  color: var(--red);
-}
-
 .blue {
   background-image: url("");
   background-color: #6e2ab9;
-}
-
-.blueText {
-  color: var(--blue);
 }
 
 .activated {
