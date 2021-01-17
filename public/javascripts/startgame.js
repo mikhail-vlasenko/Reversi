@@ -21,9 +21,9 @@ var game;
 
 var socket = new WebSocket("ws://localhost:3000");
 
-socket.onopen = function (event) {
-    socket.send("hello");
-};
+// socket.onopen = function () {
+//     //socket open
+// };
 
 socket.onmessage = function (msg) {
     let message = msg.data;
