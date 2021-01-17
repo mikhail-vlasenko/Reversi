@@ -93,6 +93,7 @@ wss.on('connection', function connection(ws) {
         console.log(con.id);
         waitingPlayer.send(messages.player1);
         con.send(messages.player2);
+        waitingPlayer = -1;
     }
 
     con.on('message', function incoming(message) {

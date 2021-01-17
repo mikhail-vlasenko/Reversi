@@ -23,7 +23,7 @@ function Game(player) {
     };
 
     // Makes a move for a given player, changes the field accordingly
-    this.makeMove = function (player, x, y) {
+    this.makeMove = function (x, y, player) {
         for (let dx = -1; dx <= 1; dx++) {
             for (let dy = -1; dy <= 1; dy++) {
                 if (dx === 0 && dy === 0) {
@@ -31,10 +31,16 @@ function Game(player) {
                 }
                 let i = x + dx;
                 let j = y + dy;
-                while (this.field[i][j] === (3 - player)) {  // while disk === opponent's color
-                    this.setCell(i, j, player);
+                let toChange = [];
+                while ((0 <= i && i < 8 && 0 <= j && j < 8) && this.field[j][i] === (3 - player)) {  // while disk === opponent's color
+                    toChange.push([i, j]);
                     i += dx;
                     j += dy;
+                }
+                if ((0 <= i && i < 8 && 0 <= j && j < 8) && this.field[j][i] === player){
+                    for (let cell of toChange){
+                        this.setCell(cell[0], cell[1], player);
+                    }
                 }
             }
         }
@@ -144,23 +150,22 @@ function Game(player) {
         for (let i = 0; i < this.possibleMoves.length; i++) {
             if (coords.x === this.possibleMoves[i][1] && coords.y === this.possibleMoves[i][0]) {
                 console.log('Move made');
+                this.makeMove(coords.x, coords.y, this.player);
                 this.setCell(coords.x, coords.y, this.player);
-                this.makeMove(player, coords.x, coords.y);
                 this.myTurn = false;
                 this.drawPossibleMoves();
                 socket.send(coords.x.toString() + coords.y.toString());
                 return;
             }
         }
-        
     };
 
     // is called when the opponent's turn is received, updates the local state accordingly
     this.receiveTurn = function (message) {
         let x = parseInt(message.charAt(0));
         let y = parseInt(message.charAt(1));
-        this.setCell(x, y, 3-player);
-        this.makeMove((3 - this.player), x, y);
+        this.makeMove(x, y, 3 - this.player);
+        this.setCell(x, y, 3 - this.player);
         this.myTurn = true;
         this.drawPossibleMoves();
         //No moves (lost):
