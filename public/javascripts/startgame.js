@@ -1,9 +1,7 @@
 /* eslint-disable no-undef */
 
-// Below 3 could be put into another function
 function startTheGame(player) {
     // player 1 (blu) always has the first move
-    
     game.initTable();
     game.setScore(0,0);
     game.setTurnText(player);
@@ -20,10 +18,6 @@ let player = 0;
 var game;
 
 var socket = new WebSocket("ws://localhost:3000");
-
-// socket.onopen = function () {
-//     //socket open
-// };
 
 socket.onmessage = function (msg) {
     let message = msg.data;

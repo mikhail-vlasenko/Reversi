@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
     });
 });
 
-/* Pressing the 'PLAY' button, returns this page */
+/* clicking on the 'PLAY' link, returns this page */
 router.get("/play", function (req, res) {
     res.sendFile("game.html", {root: "./public"});
 });

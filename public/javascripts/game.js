@@ -141,6 +141,7 @@ function Game(player) {
         document.getElementById("Score2").innerHTML = player2Red;
     };
 
+    // Gets the score via getscore and changes the DOM via setscore
     this.refreshScore = function () {
         let score = this.getScore();
         let red = score.red;
