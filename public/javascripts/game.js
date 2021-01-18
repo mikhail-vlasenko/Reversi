@@ -287,6 +287,8 @@ function Game(player) {
 
     // Sets IDs for all rows and cells in the game table
     this.initTable = function () {
+        document.getElementById("gameScreen").className ="";
+        document.getElementById("waiting").className ="hidden";
         let i = 0;
         let id = 0;
         for (let row of document.querySelector("table").children[0].children) {
