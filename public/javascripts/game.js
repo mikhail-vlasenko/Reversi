@@ -287,8 +287,6 @@ function Game(player) {
 
     // Sets IDs for all rows and cells in the game table
     this.initTable = function () {
-        document.getElementById("gameScreen").className ="";
-        document.getElementById("waiting").className ="hidden";
         let i = 0;
         let id = 0;
         for (let row of document.querySelector("table").children[0].children) {
@@ -303,6 +301,8 @@ function Game(player) {
                 td.addEventListener("click", () => this.processClick(td));
             }
         }
+        document.getElementById("gameScreen").className ="";
+        document.getElementById("waiting").className ="hidden";
     };
 
     // Ends the game taking the player who won as an argument
