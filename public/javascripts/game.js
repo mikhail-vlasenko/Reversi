@@ -312,5 +312,12 @@ function Game(player) {
         document.getElementById("gametitle").innerHTML = (player === this.player ? "You won the game!" : "You lost :(");
     };
 
+    // Stops the game if the opponent disconnected
+    this.abortGame = function () {
+        document.getElementById("gameScreen").className ="hidden";
+        document.querySelector("#waiting h1").innerHTML = "Your opponent has disconnected, <a href='/'>Play again</a>";
+        document.getElementById("waiting").className = "";
+    };
+
 }
 

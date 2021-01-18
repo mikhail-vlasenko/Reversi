@@ -40,6 +40,7 @@ main a {
   font-size: 3rem;
   font-weight: bold;
   border-radius: 2rem;
+  margin-top: 2em;
   padding: 1.1rem;
   background-color: #ddd;
   box-shadow: 0px 0px 5px white;
@@ -123,7 +124,7 @@ article {
   display: none;
 }
 
-@media screen and (max-height: 767px), screen and (max-width: 1365px) {
+@media screen and (max-height: 600px), screen and (max-width: 1000px) {
   article {
     display: block;
   }

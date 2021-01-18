@@ -4,7 +4,7 @@ function startTheGame(player) {
     // player 1 (blu) always has the first move
     game.initTable();
     game.setScore(0,0);
-    game.setTurnText(player);
+    game.setTurnText(1);
     game.startTime();
     game.setPlayer(player);
 
@@ -39,6 +39,9 @@ socket.onmessage = function (msg) {
             break;
         case messages.lost2:
             game.endGame(1);
+            break;
+        case messages.abort:
+            game.abortGame();
             break;
         default:
             //coordinates
