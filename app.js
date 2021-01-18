@@ -104,10 +104,12 @@ wss.on('connection', function connection(ws) {
             matches[con.match].result = 2;
             gameStatistics.gamesPlayed++;
             gameStatistics.redWins++;
+            websockets[con.partner].send(messages.lost1);
         } else if (message === 'Lost2') {
             matches[con.match].result = 1;
             gameStatistics.gamesPlayed++;
             gameStatistics.blueWins++;
+            websockets[con.partner].send(messages.lost2);
         } else {
             console.log('unknown message');
         }
