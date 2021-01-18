@@ -14,11 +14,21 @@
       </h1>
       <a id="play" href="/play">Play</a>
       <img width="50%" src="/assets/animations/fullRotation.gif" />
+      <article>
+        Your screen size is smaller than the recommended size. Please be aware
+        that your experience with the website will be negatively affected.
+      </article>
     </main>
     <aside>
       <h3>Random Statistics</h3>
-      <p><span>Total games played:</span> <span id="totalGames"><%= gamesPlayed %></span></p>
-      <p><span>People in-game: </span> <span id="peopleIngame"><%= peopleInGame %></span></p>
+      <p>
+        <span>Total games played:</span>
+        <span id="totalGames"><%= gamesPlayed %></span>
+      </p>
+      <p>
+        <span>People in-game: </span>
+        <span id="peopleIngame"><%= peopleInGame %></span>
+      </p>
       <p><span>Color win rate: </span></p>
       <p class="blueText">
         <span>Blueberry:</span><span id="blueWinPercent"><%= blueWins %></span>
@@ -27,5 +37,12 @@
         <span>Radish:</span><span id="redWinPercent"><%= redWins %></span>
       </p>
     </aside>
+    <a
+      id="rules"
+      target="_blank"
+      rel="noopener noreferrer"
+      href="http://www.flyordie.com/games/help/reversi/en/games_rules_reversi.html"
+      >Rules</a
+    >
   </body>
 </html>

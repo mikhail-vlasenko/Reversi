@@ -141,6 +141,13 @@ function Game(player) {
         document.getElementById("Score2").innerHTML = player2Red;
     };
 
+    this.refreshScore = function () {
+        let score = this.getScore();
+        let red = score.red;
+        let blue = score.blue;
+        this.setScore(blue, red);
+    };
+
     // Processes a user's click on any of the cells on the board \
     // (checks if they are available for a move and makes the move)
     this.processClick = function (event) {
@@ -152,7 +159,9 @@ function Game(player) {
                 console.log('Move made');
                 this.makeMove(coords.x, coords.y, this.player);
                 this.setCell(coords.x, coords.y, this.player);
+                this.refreshScore();
                 this.myTurn = false;
+                this.setTurnText(3-player);
                 this.drawPossibleMoves();
                 socket.send(coords.x.toString() + coords.y.toString());
                 return;
@@ -166,11 +175,13 @@ function Game(player) {
         let y = parseInt(message.charAt(1));
         this.makeMove(x, y, 3 - this.player);
         this.setCell(x, y, 3 - this.player);
+        this.refreshScore();
         this.myTurn = true;
+        this.setTurnText(player);
         this.drawPossibleMoves();
         //No moves (lost):
         if (this.possibleMoves.length === 0) {
-            this.gameOngoing = false;
+            this.endGame(3-player);
             socket.send("Lost"+this.player);
         }
     };
