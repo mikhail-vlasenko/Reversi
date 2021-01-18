@@ -8,6 +8,7 @@ function Game(player) {
     this.gameOngoing = true;
     this.startingTime = new Date();
     this.animationsOn = true;
+    this.moveSound = new Sound('../assets/sounds/moveSound.wav');
 
     // Resets the 2D field array back to its original state (or initialises it)
     this.reset = function () {
@@ -164,6 +165,7 @@ function Game(player) {
                 this.myTurn = false;
                 this.setTurnText(3-player);
                 this.drawPossibleMoves();
+                this.moveSound.play();
                 socket.send(coords.x.toString() + coords.y.toString());
                 return;
             }
@@ -311,6 +313,7 @@ function Game(player) {
         this.gameOngoing = false;
         document.getElementById("gametitle").innerHTML = (player === this.player ? "You won the game!" : "You lost :(");
     };
+}
 
     // Stops the game if the opponent disconnected
     this.abortGame = function () {
@@ -319,5 +322,15 @@ function Game(player) {
         document.getElementById("waiting").className = "";
     };
 
+function Sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function () {
+        this.sound.play();
+    };
 }
 
