@@ -120,7 +120,7 @@ wss.on('connection', function connection(ws) {
             waitingPlayer = -1;
         }else {
             gameStatistics.peopleInGame--;
-            if (matches[con.match].result==0){
+            if (matches[con.match].result === 0){
                 // match not finished but player disconnected
                 websockets[con.partner].send(messages.abort);
             }

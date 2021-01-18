@@ -184,8 +184,13 @@ function Game(player) {
         this.drawPossibleMoves();
         //No moves (lost):
         if (this.possibleMoves.length === 0) {
-            this.endGame(3-player);
-            socket.send("Lost"+this.player);
+            let score = this.getScore();
+            let loser = 2;
+            if (score.blue < score.red){
+                loser = 1;
+            }
+            this.endGame((3 - loser));
+            socket.send("Lost"+loser);
         }
     };
 
