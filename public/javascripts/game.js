@@ -318,7 +318,6 @@ function Game(player) {
         this.gameOngoing = false;
         document.getElementById("gametitle").innerHTML = (player === this.player ? "You won the game!" : "You lost :(") +" <a href='/'>Play again</a>";
     };
-}
 
     // Stops the game if the opponent disconnected
     this.abortGame = function () {
@@ -326,6 +325,9 @@ function Game(player) {
         document.querySelector("#waiting h1").innerHTML = "Your opponent has disconnected, <a href='/'>Play again</a>";
         document.getElementById("waiting").className = "";
     };
+}
+
+    
 
 function Sound(src) {
     this.sound = document.createElement("audio");
