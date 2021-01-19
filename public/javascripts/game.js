@@ -316,7 +316,7 @@ function Game(player) {
     // Ends the game taking the player who won as an argument
     this.endGame = function (player){
         this.gameOngoing = false;
-        document.getElementById("gametitle").innerHTML = (player === this.player ? "You won the game!" : "You lost :(");
+        document.getElementById("gametitle").innerHTML = (player === this.player ? "You won the game!" : "You lost :(") +" <a href='/'>Play again</a>";
     };
 }
 
